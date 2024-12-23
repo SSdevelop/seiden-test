@@ -1,0 +1,22 @@
+[
+    {
+        "model": "IDEA-Research/grounding-dino-base",
+        "video": "./hong_kong_airport_demo_data.mp4",
+        "query": "pink suitcase",
+        "frame_count": 2701,
+        "non-query specific part (s)": 124.52367922601434,
+        "query specific part (s)": 1046.5258573779552,
+        "non-query specific part (%)": 10.633510823729251,
+        "query specific part (%)": 89.36648917627075
+    },
+    {
+        "model": "IDEA-Research/grounding-dino-tiny", 
+        "video": "./hong_kong_airport_demo_data.mp4",
+        "query": "pink suitcase", 
+        "frame_count": 2701,
+        "non-query specific part (s)": 42.16182706599557,
+        "query specific part (s)": 803.8611774740166,
+        "non-query specific part (%)": 4.983531989052616,
+        "query specific part (%)": 95.01646801094739
+    }
+]

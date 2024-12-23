@@ -1,0 +1,44 @@
+FROM nvidia/cuda:11.3.1-devel-ubuntu20.04
+
+ENV FORCE_CUDA="1"
+ENV MMCV_WITH_OPS=1
+
+RUN apt-get update && apt-get install -y --no-install-recommends
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common
+RUN add-apt-repository ppa:deadsnakes/ppa
+RUN apt-get update
+RUN apt-get install -y python3.10 \
+    python3-pip     \
+    python3-apt     \
+    libgl1-mesa-glx \
+    libsm6          \
+    libxext6        \
+    libxrender-dev  \
+    libglib2.0-0    \
+    git             \
+    curl            \
+    python3.10-dev  \
+    python3-wheel
+RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
+RUN pip3.10 install wheel
+RUN pip3.10 install torch==1.11.0+cu113 torchvision==0.12.0+cu113 \
+    --extra-index-url https://download.pytorch.org/whl/cu113
+RUN pip3.10 install -U setuptools
+# RUN pip3.10 install oss2
+RUN pip3.10 install openmim 
+RUN pip3.10 install jupyterlab 
+RUN pip3.10 install supervision==0.19.0 
+RUN pip3.10 install opencv-python
+RUN pip3.10 install transformers
+RUN pip3.10 install mmengine==0.10.3
+RUN mim install mmcv==2.0.0
+RUN pip3.10 install mmdet==3.0.0
+RUN mim install mmyolo==0.6.0
+
+COPY . /app/yolo
+WORKDIR /app
+RUN apt-get install wget
+RUN wget https://huggingface.co/wondervictor/YOLO-World/resolve/main/yolo_world_v2_x_obj365v1_goldg_cc3mlite_pretrain_1280ft-14996a36.pth
+RUN cd yolo && pip install -e .
+RUN pip install numpy==1.26.4
